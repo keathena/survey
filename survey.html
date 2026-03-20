@@ -110,7 +110,7 @@ body{font-family:'Microsoft JhengHei','PingFang TC',Arial,sans-serif;background:
    將 Google Apps Script 部署網址貼入下方引號內，然後上傳 GitHub Pages
    ════════════════════════════════════ */
 const CONFIG = {
-  GAS_URL: ''   // ← 貼入您的 GAS 部署網址，例如：'https://script.google.com/macros/s/AKfycb.../exec'
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbwQGNVqhLE7N7T4rdRRQqs3S_KmO9svPg8Wo2u7Dz6oYaoOk8ET1B7OT8S7MrDRoZy1eg/exec'   // ← 貼入您的 GAS 部署網址，例如：'https://script.google.com/macros/s/AKfycb.../exec'
 };
 
 /* ════════════════════════════════════
@@ -448,7 +448,7 @@ ${gasOk
     <li>前往 <a href="https://script.google.com" target="_blank" style="color:#1a4f8b;">script.google.com</a> → 建立新專案 → 將 <code>gas_code.gs</code> 程式碼貼入編輯器</li>
     <li>點「部署」→「新增部署」→ 類型：<code>網路應用程式</code> → 執行身分：<code>我</code> → 存取：<code>所有人</code> → 部署</li>
     <li>複製「部署網址」（以 /exec 結尾）</li>
-    <li>用文字編輯器開啟 <code>survey.html</code>，找到頂端 <code>GAS_URL: ''</code>，將網址貼入引號內</li>
+    <li>用文字編輯器開啟 <code>survey.html</code>，找到頂端 <code>GAS_URL: 'https://script.google.com/macros/s/AKfycbwQGNVqhLE7N7T4rdRRQqs3S_KmO9svPg8Wo2u7Dz6oYaoOk8ET1B7OT8S7MrDRoZy1eg/exec'</code>，將網址貼入引號內</li>
     <li>將修改後的 HTML 上傳至 GitHub Pages，分享網址給受訪者填寫</li>
   </ol>
 </div>`}
