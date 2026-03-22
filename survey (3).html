@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>產險消費者理賠決策行為調查</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Microsoft JhengHei','PingFang TC',Arial,sans-serif;background:#f0f4f9;color:#1a202c;min-height:100vh;padding-bottom:32px;}
+.container{max-width:800px;margin:0 auto;padding:20px 16px;}
+.card{background:#fff;border-radius:14px;box-shadow:0 2px 18px rgba(0,0,0,.09);padding:32px 38px;margin-bottom:20px;}
+.header{background:linear-gradient(135deg,#1a4f8b,#2d7dd2);color:#fff;padding:26px 38px;border-radius:14px;margin-bottom:20px;}
+.header h1{font-size:20px;font-weight:800;margin-bottom:5px;}
+.header p{font-size:13px;opacity:.85;line-height:1.6;}
+.sec-title{font-size:15.5px;font-weight:700;color:#1a4f8b;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e8f0;}
+.q-block{margin-bottom:22px;}
+.q-text{font-size:14.5px;font-weight:600;margin-bottom:10px;line-height:1.7;color:#2d3748;display:flex;align-items:flex-start;gap:9px;}
+.q-num{display:inline-flex;align-items:center;justify-content:center;background:#1a4f8b;color:#fff;border-radius:50%;min-width:24px;height:24px;font-size:12px;flex-shrink:0;margin-top:2px;}
+.radio-group{display:flex;flex-direction:column;gap:8px;}
+.radio-opt{display:flex;align-items:center;gap:10px;padding:10px 15px;border:2px solid #e2e8f0;border-radius:9px;cursor:pointer;transition:all .15s;font-size:14px;user-select:none;}
+.radio-opt:hover{border-color:#2d7dd2;background:#ebf4ff;}
+.radio-opt.sel{border-color:#1a4f8b;background:#ebf4ff;font-weight:600;}
+.radio-opt input{width:16px;height:16px;accent-color:#1a4f8b;cursor:pointer;flex-shrink:0;}
+.prog-wrap{background:#e2e8f0;border-radius:100px;height:6px;margin-bottom:20px;overflow:hidden;}
+.prog-bar{background:linear-gradient(90deg,#1a4f8b,#2d7dd2);height:6px;border-radius:100px;transition:width .5s;}
+.scenario-box{background:#f0f7ff;border-left:4px solid #2d7dd2;border-radius:9px;padding:18px 22px;margin-bottom:14px;font-size:14px;line-height:1.85;}
+.scenario-box p{margin-bottom:10px;}
+.scenario-box p:last-child{margin-bottom:0;}
+.quote-block{background:#fff;border-left:3px solid #94a3b8;padding:11px 15px;border-radius:4px;font-style:italic;color:#374151;margin:8px 0;}
+.condition-box{background:#fffbeb;border:2px solid #f6c90e;border-radius:9px;padding:14px 18px;margin:12px 0;font-size:14px;line-height:1.75;}
+.condition-box .cond-label{font-weight:700;color:#92400e;margin-bottom:5px;font-size:12.5px;}
+.likert-wrap{overflow-x:auto;margin-bottom:5px;}
+.likert-tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:490px;}
+.likert-tbl th{background:#1a4f8b;color:#fff;padding:9px 7px;text-align:center;font-weight:600;white-space:nowrap;}
+.likert-tbl th:first-child{text-align:left;width:46%;white-space:normal;}
+.likert-tbl td{padding:11px 7px;border-bottom:1px solid #e8edf2;text-align:center;vertical-align:middle;}
+.likert-tbl td:first-child{text-align:left;font-size:13px;line-height:1.6;padding-right:10px;}
+.likert-tbl tr:hover td{background:#f7fafc;}
+.likert-tbl input[type=radio]{width:17px;height:17px;accent-color:#1a4f8b;cursor:pointer;}
+.likert-hint{display:flex;justify-content:space-between;padding:3px 6px;font-size:11px;color:#718096;margin-top:4px;}
+/* PAGE-BOTTOM NAV */
+.page-nav{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:20px 0 4px;border-top:1px solid #e2e8f0;margin-top:16px;flex-wrap:wrap;}
+.page-nav-hint{flex:1;font-size:12px;color:#a0aec0;}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:12px 26px;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all .15s;line-height:1;}
+.btn-primary{background:#1a4f8b;color:#fff;}
+.btn-primary:hover{background:#153f70;transform:translateY(-1px);}
+.btn-primary:disabled{background:#93b5d6;cursor:not-allowed;transform:none;}
+.btn-secondary{background:#e8edf2;color:#4a5568;}
+.btn-secondary:hover{background:#cbd5e0;}
+.btn-danger{background:#e53e3e;color:#fff;}
+.btn-danger:hover{background:#c53030;}
+.btn-success{background:#276749;color:#fff;}
+.btn-success:hover{background:#1e5038;}
+/* THANK YOU */
+.thank-card{text-align:center;padding:42px 20px;}
+.thank-card .icon{font-size:58px;margin-bottom:16px;}
+.thank-card h2{font-size:24px;color:#1a4f8b;margin-bottom:10px;font-weight:800;}
+.thank-card p{font-size:15px;color:#4a5568;line-height:1.7;}
+/* ADMIN */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:20px;}
+.stat-card{background:linear-gradient(135deg,#ebf4ff,#dbeafe);border-radius:10px;padding:14px;text-align:center;border:1px solid #bfdbfe;}
+.stat-card .num{font-size:30px;font-weight:900;color:#1a4f8b;line-height:1;}
+.stat-card .lbl{font-size:11px;color:#4a6fa5;margin-top:4px;font-weight:600;}
+.tab-nav{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid #e2e8f0;overflow-x:auto;}
+.tab-btn{padding:9px 15px;border:none;background:none;cursor:pointer;font-size:12.5px;font-weight:700;color:#718096;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s;}
+.tab-btn.active{color:#1a4f8b;border-bottom-color:#1a4f8b;}
+.atbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:14px;}
+.atbl th{background:#2d3748;color:#fff;padding:8px 9px;text-align:left;font-size:11.5px;white-space:nowrap;}
+.atbl td{padding:8px 9px;border-bottom:1px solid #e8edf2;}
+.atbl .hl td{background:#fefce8;}
+.atbl .sig{color:#c53030;font-weight:800;}
+.dtbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:14px;}
+.dtbl th{background:#475569;color:#fff;padding:8px 9px;text-align:center;font-size:11.5px;}
+.dtbl th:first-child{text-align:left;}
+.dtbl td{padding:8px 9px;border-bottom:1px solid #e8edf2;text-align:center;}
+.dtbl td:first-child{text-align:left;font-weight:600;}
+.raw-wrap{overflow:auto;max-height:400px;border:1px solid #e2e8f0;border-radius:8px;}
+.rtbl{width:100%;border-collapse:collapse;font-size:11px;}
+.rtbl th{background:#1a4f8b;color:#fff;padding:6px 7px;white-space:nowrap;position:sticky;top:0;}
+.rtbl td{padding:5px 7px;border-bottom:1px solid #e8edf2;white-space:nowrap;}
+.rtbl tr:hover td{background:#f0f7ff;}
+.alert{padding:12px 15px;border-radius:9px;margin-bottom:14px;font-size:13px;line-height:1.6;}
+.alert-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e;}
+.alert-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a5f;}
+.alert-ok{background:#f0fdf4;border:1px solid #86efac;color:#166534;}
+.proc-section{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:14px 18px;margin-bottom:12px;}
+.proc-section h4{font-size:12.5px;font-weight:700;color:#1a4f8b;margin-bottom:10px;font-family:monospace;}
+.indir-box{border-radius:9px;padding:14px 18px;margin-top:12px;border:2px solid;}
+.indir-ok{background:#f0fdf4;border-color:#86efac;}
+.indir-ns{background:#fff7ed;border-color:#fdba74;}
+.indir-box h4{font-size:13.5px;font-weight:700;margin-bottom:8px;}
+.indir-box p{font-size:13px;line-height:1.7;}
+.loading{text-align:center;padding:36px;color:#718096;font-size:14px;}
+.legend{font-size:11.5px;color:#718096;margin-top:8px;line-height:1.8;}
+/* GAS SETUP */
+.gas-setup{background:#fefce8;border:2px dashed #f6c90e;border-radius:12px;padding:20px 24px;margin-bottom:16px;}
+.gas-setup h3{color:#92400e;font-size:14.5px;font-weight:700;margin-bottom:8px;}
+.gas-setup ol{padding-left:18px;font-size:13px;line-height:2;color:#78350f;}
+.gas-setup code{background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:1px 5px;font-size:12px;}
+.gas-connected{background:#f0fdf4;border:1px solid #86efac;border-radius:9px;padding:11px 15px;margin-bottom:14px;font-size:13px;color:#166534;}
+@media(max-width:600px){.card,.header{padding:18px;}.btn{padding:10px 16px;font-size:13.5px;}}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+/* ════════════════════════════════════
+   ★ 研究者設定區
+   將 Google Apps Script 部署網址貼入下方引號內，然後上傳 GitHub Pages
+   ════════════════════════════════════ */
+const CONFIG = {
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbwQGNVqhLE7N7T4rdRRQqs3S_KmO9svPg8Wo2u7Dz6oYaoOk8ET1B7OT8S7MrDRoZy1eg/exec'   // ← 貼入您的 GAS 部署網址，例如：'https://script.google.com/macros/s/AKfycb.../exec'
+};
+
+/* ════════════════════════════════════
+   MATH — jStat F & t CDF
+   ════════════════════════════════════ */
+function lgamma(z){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];let y=z,x=z,tmp=x+5.5;tmp-=(x+0.5)*Math.log(tmp);let ser=1.000000000190015;for(let j=0;j<6;j++)ser+=c[j]/++y;return-tmp+Math.log(2.5066282746310005*ser/x);}
+function betacf(a,b,x){const MAXIT=200,EPS=3e-7,FPMIN=1e-30;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;let h=d;for(let m=1;m<=MAXIT;m++){let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;let del=d*c;h*=del;if(Math.abs(del-1)<EPS)break;}return h;}
+function ibeta(a,b,x){if(x<=0)return 0;if(x>=1)return 1;const lbt=Math.exp(Math.log(x)*a+Math.log(1-x)*b-lgamma(a)-lgamma(b)+lgamma(a+b));return x<(a+1)/(a+b+2)?lbt*betacf(a,b,x)/a:1-lbt*betacf(b,a,1-x)/b;}
+function pF(F,d1,d2){if(F<=0)return 1;try{return 1-ibeta(d1/2,d2/2,d1*F/(d1*F+d2));}catch(e){return NaN;}}
+function pT2(t,df){const x=df/(df+t*t);try{return ibeta(df/2,0.5,x);}catch(e){return NaN;}}
+
+/* ════════════════════════════════════
+   OLS REGRESSION
+   ════════════════════════════════════ */
+function solveLinear(A,b){const n=b.length,aug=A.map((r,i)=>[...r,b[i]]);for(let c=0;c<n;c++){let mx=c;for(let r=c+1;r<n;r++)if(Math.abs(aug[r][c])>Math.abs(aug[mx][c]))mx=r;[aug[c],aug[mx]]=[aug[mx],aug[c]];if(Math.abs(aug[c][c])<1e-12)continue;for(let r=0;r<n;r++){if(r===c)continue;const f=aug[r][c]/aug[c][c];for(let j=c;j<=n;j++)aug[r][j]-=f*aug[c][j];}}return aug.map((r,i)=>r[n]/r[i]);}
+function invertMat(A){const n=A.length,aug=A.map((r,i)=>{const id=Array(n).fill(0);id[i]=1;return[...r,...id];});for(let c=0;c<n;c++){let mx=c;for(let r=c+1;r<n;r++)if(Math.abs(aug[r][c])>Math.abs(aug[mx][c]))mx=r;[aug[c],aug[mx]]=[aug[mx],aug[c]];const piv=aug[c][c];if(Math.abs(piv)<1e-12)return null;for(let j=0;j<2*n;j++)aug[c][j]/=piv;for(let r=0;r<n;r++){if(r===c)continue;const f=aug[r][c];for(let j=0;j<2*n;j++)aug[r][j]-=f*aug[c][j];}}return aug.map(r=>r.slice(n));}
+function ols(Xmat,Y){const n=Y.length,p=Xmat[0].length;const XtX=Array(p).fill(0).map(()=>Array(p).fill(0));const XtY=Array(p).fill(0);for(let i=0;i<n;i++)for(let j=0;j<p;j++){XtY[j]+=Xmat[i][j]*Y[i];for(let k=0;k<p;k++)XtX[j][k]+=Xmat[i][j]*Xmat[i][k];}const beta=solveLinear(XtX.map(r=>[...r]),XtY.slice());let SSE=0;for(let i=0;i<n;i++){let yh=0;for(let j=0;j<p;j++)yh+=Xmat[i][j]*beta[j];SSE+=(Y[i]-yh)**2;}const MSE=SSE/(n-p);const inv=invertMat(XtX);const se=beta.map((_,j)=>inv?Math.sqrt(Math.max(0,MSE*inv[j][j])):NaN);const tv=beta.map((b,j)=>b/se[j]);const pv=tv.map(t=>pT2(Math.abs(t),n-p));return{beta,se,t:tv,p:pv};}
+
+/* ════════════════════════════════════
+   HAYES PROCESS Model 4 + Bootstrap
+   ════════════════════════════════════ */
+function runMediation(x,m,y,B=5000){
+  const n=x.length;if(n<10)return null;
+  const ra=ols(x.map(v=>[1,v]),m);
+  const a=ra.beta[1],a_se=ra.se[1],a_t=ra.t[1],a_p=ra.p[1];
+  const rbc=ols(x.map((v,i)=>[1,v,m[i]]),y);
+  const cp=rbc.beta[1],cp_se=rbc.se[1],cp_t=rbc.t[1],cp_p=rbc.p[1];
+  const b=rbc.beta[2],b_se=rbc.se[2],b_t=rbc.t[2],b_p=rbc.p[2];
+  const rc=ols(x.map(v=>[1,v]),y);
+  const c=rc.beta[1],c_se=rc.se[1],c_t=rc.t[1],c_p=rc.p[1];
+  const ab_boot=[];
+  for(let iter=0;iter<B;iter++){
+    const idx=Array.from({length:n},()=>Math.floor(Math.random()*n));
+    const bx=idx.map(i=>x[i]),bm=idx.map(i=>m[i]),by=idx.map(i=>y[i]);
+    const ra_b=ols(bx.map(v=>[1,v]),bm);
+    const rbc_b=ols(bx.map((v,i)=>[1,v,bm[i]]),by);
+    ab_boot.push(ra_b.beta[1]*rbc_b.beta[2]);
+  }
+  ab_boot.sort((a,b)=>a-b);
+  const lo=ab_boot[Math.floor(.025*B)],hi=ab_boot[Math.ceil(.975*B)-1];
+  return{a,a_se,a_t,a_p,b,b_se,b_t,b_p,cp,cp_se,cp_t,cp_p,c,c_se,c_t,c_p,indirect:a*b,lo,hi,n,B};
+}
+
+/* ════════════════════════════════════
+   ONE-WAY ANOVA
+   ════════════════════════════════════ */
+function anova(groups){const all=groups.flat(),N=all.length,k=groups.length;const gm=all.reduce((s,x)=>s+x,0)/N;let SSB=0;groups.forEach(g=>{const gmu=g.reduce((s,x)=>s+x,0)/g.length;SSB+=g.length*(gmu-gm)**2;});let SSW=0;groups.forEach(g=>{const gmu=g.reduce((s,x)=>s+x,0)/g.length;g.forEach(x=>{SSW+=(x-gmu)**2;});});const dfB=k-1,dfW=N-k,MSB=SSB/dfB,MSW=SSW/dfW,F=MSW>0?MSB/MSW:0;return{SSB,SSW,dfB,dfW,MSB,MSW,F,p:pF(F,dfB,dfW)};}
+function mu(arr){return arr.length?arr.reduce((s,x)=>s+x,0)/arr.length:NaN;}
+function num(v){const n=+v;return(!isNaN(n)&&n>0)?n:NaN;}
+function sigStar(p){return p<.001?'***':p<.01?'**':p<.05?'*':p<.1?'†':'ns';}
+function fp(p){return isNaN(p)?'—':p<.001?'&lt; .001':p.toFixed(3);}
+
+/* ════════════════════════════════════
+   STORAGE — GAS (primary) + localStorage (backup)
+   ════════════════════════════════════ */
+const LS_KEY='survey_nccu_v4';
+
+async function storageSave(resp){
+  // 永遠先存本機備份
+  try{const a=JSON.parse(localStorage.getItem(LS_KEY)||'[]');a.push(resp);localStorage.setItem(LS_KEY,JSON.stringify(a));}catch(e){}
+  // 若已設定 GAS，同步送至 Google Sheets
+  if(CONFIG.GAS_URL){
+    try{
+      await fetch(CONFIG.GAS_URL,{
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'text/plain'},
+        body:JSON.stringify(resp)
+      });
+    }catch(e){console.warn('GAS POST failed — data saved to localStorage as backup:', e);}
+  }
+}
+
+async function storageLoadAll(){
+  if(CONFIG.GAS_URL){
+    try{
+      const r=await fetch(CONFIG.GAS_URL+'?action=getData',{cache:'no-store'});
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      const data=await r.json();
+      if(data&&Array.isArray(data.rows))return data.rows;
+    }catch(e){console.warn('GAS GET failed — loading localStorage instead:', e);}
+  }
+  try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}
+}
+
+async function storageClear(){
+  if(!confirm('確定要清除本機快取資料？\n（Google Sheets 上的資料不受影響，需手動至 Sheets 刪除）'))return;
+  try{localStorage.removeItem(LS_KEY);}catch(e){}
+  renderAdmin();
+}
+
+/* ════════════════════════════════════
+   STATE
+   ════════════════════════════════════ */
+let S={};let aTab='overview';
+function reset(){S={page:'welcome',age20:null,smartphone:null,car:null,purchased:null,order:null,step:0,s1cond:null,s1q:{},s1mc:null,s2cond:null,s2q:{},s2mc:null,gender:null,edu:null,phone_price:null,car_age:null,rid:Date.now().toString(36)+Math.random().toString(36).slice(2,6),ts:new Date().toISOString()};}
+reset();
+
+/* ════════════════════════════════════
+   RENDER ROUTER
+   ════════════════════════════════════ */
+function render(){
+  if(S.page==='admin'){renderAdmin();return;}
+  const fns={welcome:pgWelcome,screen:pgScreen,s1:pgS1,s2:pgS2,demo:pgDemo,done:pgDone};
+  document.getElementById('app').innerHTML=(fns[S.page]||pgWelcome)();
+  bindClicks();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ════════════════════════════════════
+   WELCOME
+   ════════════════════════════════════ */
+function pgWelcome(){return`
+<div class="header"><h1>🏛️ 產險消費者理賠決策行為調查</h1><p>國立政治大學 EMBA 高階經營班 ｜ 指導教授：周冠男 教授 ｜ 研究生：柯惇云 敬上</p></div>
+<div class="card">
+  <div class="sec-title">歡迎詞與研究同意聲明</div>
+  <p style="margin-bottom:13px;line-height:1.85;font-size:15px;">親愛的受訪者，您好：</p>
+  <p style="margin-bottom:13px;line-height:1.85;font-size:15px;">感謝您撥冗參與本學術問卷調查。本研究旨在探討「消費者在理賠情境下的決策行為」。您的寶貴意見將對提升台灣保險理賠及服務的品質有莫大的幫助。</p>
+  <p style="margin-bottom:13px;line-height:1.85;font-size:15px;">本問卷採 <strong>無記名方式</strong> 進行，所有填答資料僅供學術統計分析之用，絕不外流或作為商業用途，請您放心依據最真實的想法作答。</p>
+  <p style="line-height:1.85;font-size:15px;">問卷填寫時間約需 <strong>5 到 8 分鐘</strong>。感謝您的協助與支持！</p>
+  <div class="page-nav">
+    <span style="font-size:12px;color:#a0aec0;cursor:pointer;" onclick="S.page='admin';render()">● 研究人員後台</span>
+    <button class="btn btn-primary" onclick="S.page='screen';render()">開始填答 →</button>
+  </div>
+</div>`;}
+
+/* ════════════════════════════════════
+   SCREENING
+   ════════════════════════════════════ */
+function pgScreen(){return`
+<div class="header"><h1>📋 資格篩選</h1><p>請回答以下基本問題，以確認參與資格</p></div>
+<div class="prog-wrap"><div class="prog-bar" style="width:10%"></div></div>
+<div class="card">
+  <div class="sec-title">【資格篩選題】</div>
+  ${qB(1,'請問您目前的年齡是否已滿 18 歲（具備完全行為能力）？',rg('age20',[['yes','是'],['no','否（問卷到此結束）']]))}
+  ${qB(2,'請問您目前是否有擁有並正在使用「智慧型手機」？',rg('smartphone',[['yes','是'],['no','否（將不參與行動裝置險實驗）']]))}
+  ${qB(3,'請問您目前是否有經常駕駛的「自用小客車」？',rg('car',[['yes','是'],['no','否（將不參與車體險實驗）']]))}
+  ${qB(4,'請問您過去三年內，是否曾向產險公司購買過任何保險（如機車/汽車險、行動裝置險、旅平險等）？',rg('purchased',[['yes','是，曾經購買過'],['no','否，從未購買過']]))}
+  <div class="page-nav">
+    <span class="page-nav-hint">📋 資格篩選</span>
+    <button class="btn btn-secondary" onclick="S.page='welcome';render()">← 返回</button>
+    <button class="btn btn-primary" onclick="submitScreen()">下一步 →</button>
+  </div>
+</div>`;}
+
+function submitScreen(){
+  if(!S.age20||!S.smartphone||!S.car||!S.purchased){alert('請回答所有問題後再繼續。');return;}
+  if(S.age20==='no'){document.getElementById('app').innerHTML=`<div class="card thank-card"><div class="icon">🙏</div><h2>感謝您的時間</h2><p>由於年齡不符合本研究資格要求，問卷到此結束。感謝您的配合！</p><div style="margin-top:26px;"><button class="btn btn-secondary" onclick="reset();render()">返回首頁</button></div></div>`;return;}
+  const el=[];if(S.smartphone==='yes')el.push(1);if(S.car==='yes')el.push(2);
+  if(!el.length){S.page='demo';render();return;}
+  S.order=el.length===2?(Math.random()<.5?[1,2]:[2,1]):el;
+  S.s1cond=['A','B','C'][Math.floor(Math.random()*3)];
+  S.s2cond=Math.random()<.5?'A':'B';
+  S.step=0;nextScenario();
+}
+function nextScenario(){if(S.step>=S.order.length){S.page='demo';render();return;}S.page=S.order[S.step]===1?'s1':'s2';render();}
+
+/* ════════════════════════════════════
+   SCENARIO 1 — Mobile Device Insurance
+   ════════════════════════════════════ */
+const S1Q=['在這個情境下，我會考慮採納同事的建議，將手機螢幕弄碎以申請理賠。',
+  '為了換取全新的螢幕或整新機，我極有可能會「技巧性地」讓手機符合理賠標準。',
+  '如果確定保險公司不會派人查核，我會選擇故意擴大手機的損壞程度。',
+  '我已經繳了一整年的保費，透過這種方式換新螢幕，只是拿回我應得的權益。',
+  '這是因為保險公司的理賠規定太不通人情（小刮痕不賠），我才被迫用這種方式保障利益。',
+  '我認為聽從同事建議（故意弄碎手機螢幕）去申請理賠，是一種嚴重的保險詐欺行為。',
+  '把原本只有小刮痕的手機弄碎去申請理賠，會讓我內心感到強烈的不安與罪惡感。'];
+const S1COND={
+  A:{type:'一般聲明',text:'茲聲明本申請書所填各項內容均屬正確。'},
+  B:{type:'誠實聲明（含法律責任）',text:'茲聲明絕無蓄意破壞手機或假報遭竊等虛報事故情形，否則願負相關法律責任。'},
+  C:{type:'社會規範訊息',text:'據統計，過去一年高達 96% 之保戶皆如實申報。'}
+};
+function pgS1(){const c=S1COND[S.s1cond];const prog=S.step===0?25:55;return`
+<div class="header"><h1>📱 情境一：行動裝置險</h1><p>請仔細閱讀以下情境，並想像自己就是故事中的主角</p></div>
+<div class="prog-wrap"><div class="prog-bar" style="width:${prog}%"></div></div>
+<div class="card">
+  <div class="sec-title">【情境說明】</div>
+  <div class="scenario-box">
+    <p>您在一年前購買了一支價值三萬多元的高階智慧型手機，當時順便向產險公司投保了「行動裝置險」，每個月約 300 元當作保費，至今已繳了快一年。</p>
+    <p>今天早上，您正準備趕赴一場由您主持、極為重要的跨部門高階會議。在匆忙走進會議室的途中，手機不慎從口袋滑落。撿起來檢查後，幸好螢幕只有在最邊緣的地方產生了一道<strong>極不顯眼的微小刮痕</strong>，完全不影響日常操作。</p>
+    <p>中午休息時，您向要好的同事提起此事。同事看了一下您的手機，對您說：</p>
+    <div class="quote-block">「我記得你的手機保險下個月就要到期了！你每個月乖乖繳保費，但像這種不影響功能的邊緣小刮痕，保險公司通常是不理賠的，甚至直接退件。不如趁現在，『不小心』把這支手機再摔破一點，讓螢幕產生明顯的網狀裂痕，然後向產險公司申請理賠。這樣他們通常會直接換一塊全新的原廠螢幕，說不定運氣好還會換一支整新機給你。這樣你這一年好幾千元的保費就不會白繳了！」</div>
+    <p>晚上回到家，您看著那道小刮痕，拿出了另一支備用機，打開了產險公司的網頁，下載理賠申請書，準備填具相關欄位⋯⋯</p>
+  </div>
+  <p style="font-weight:700;margin-bottom:9px;color:#374151;font-size:14px;">📄 您看到的理賠申請書表頭注意事項如下：</p>
+  <div class="condition-box"><div class="cond-label">【注意事項 — ${c.type}】</div>${c.text}</div>
+</div>
+<div class="card">
+  <div class="sec-title">【題項評估】</div>
+  <p style="color:#718096;font-size:13px;margin-bottom:13px;">請評估您對以下敘述的同意程度（1 = 非常不同意 / 極不可能 ⋯ 5 = 非常同意 / 極有可能）</p>
+  ${likert('s1q',S1Q)}
+</div>
+<div class="card">
+  <div class="sec-title">【情境回顧測試】<span style="font-size:12px;font-weight:400;color:#718096;margin-left:8px;">操弄檢核題</span></div>
+  <p style="margin-bottom:13px;font-size:14px;font-weight:600;">請問您看到的「理賠申請書表頭注意事項」揭示以下哪一種設計？</p>
+  <div class="radio-group">
+    ${ro('s1mc','A','（A）茲聲明本申請書所填各項內容均屬正確。')}
+    ${ro('s1mc','B','（B）茲聲明絕無蓄意破壞手機或假報遭竊等虛報事故情形，否則願負相關法律責任。')}
+    ${ro('s1mc','C','（C）過去一年高達 96% 之保戶皆如實申報。')}
+    ${ro('s1mc','D','（D）我忘記了 / 沒注意看。')}
+  </div>
+  <div class="page-nav">
+    <span class="page-nav-hint">📱 情境一：行動裝置險</span>
+    <button class="btn btn-primary" onclick="submitS1()">下一步，繼續 →</button>
+  </div>
+</div>`;}
+function submitS1(){for(let i=1;i<=7;i++){if(!S.s1q['q'+i]){alert('請完整回答所有 7 題評估題後再繼續。');return;}}if(!S.s1mc){alert('請回答情境回顧測試題。');return;}S.step++;nextScenario();}
+
+/* ════════════════════════════════════
+   SCENARIO 2 — Car Insurance
+   ════════════════════════════════════ */
+const S2Q=['我有多大的機率會同意技師的提議，將舊刮痕一起算進本次理賠中？',
+  '為了讓繳交的保費「回本」，我會接受保養廠這種擴大維修範圍的操作。',
+  '在確定理賠員查不出來的前提下，我會同意保養廠把估價單從 5,000 元開到 25,000 元。',
+  '浮報這筆修車費，感覺就像是從其他駕駛人的口袋裡掏錢。',
+  '我覺得產險公司規模這麼大，這點浮報金額對他們來說根本不痛不癢。',
+  '如果我接受了技師的提議，我事後回想起來內心會感到不安或愧疚。',
+  '把不相關的舊刮痕浮報為車禍理賠，會讓我覺得自己做了一件不道德的事。'];
+const S2COND={
+  A:{type:'大金控企業形象',html:`聽完技師的建議，您腦海中浮現了這家產險公司近期的宣傳廣告。您記得這家公司是<strong>台灣前三大金控集團旗下的子公司</strong>，集團獲利驚人、資產規模龐大。`},
+  B:{type:'社會互助資金池框架',html:`聽完技師的建議，您腦海中浮現了這家產險公司近期的宣傳標語：「保險是一個社會互助的資金池」。您意識到，理賠金並不是天上掉下來的，而是來自所有台灣車主共同繳納的保費。<strong>任何不當的浮報理賠，都會直接掏空這個資金池，導致包含您與您的親友在內的所有車主，未來可能必須承擔更昂貴的保費。</strong>`}
+};
+function pgS2(){const c=S2COND[S.s2cond];const prog=S.step===0?25:55;return`
+<div class="header"><h1>🚗 情境二：汽車車體險</h1><p>請仔細閱讀以下情境，並想像自己就是故事中的主角</p></div>
+<div class="prog-wrap"><div class="prog-bar" style="width:${prog}%"></div></div>
+<div class="card">
+  <div class="sec-title">【情境說明】</div>
+  <div class="scenario-box">
+    <p>您為愛車投保了「乙式車體險」，每年保費約 1.5 萬元，過去兩年都沒有出險紀錄。某天週末，您在地下室停車時不慎擦撞到柱子，導致右前保險桿產生一道明顯的刮痕。</p>
+    <p>您將車開到熟識的汽車保養廠估價。技師看了一下對您說：</p>
+    <div class="quote-block">「老闆，這個保險桿烤漆處理大概只要 5,000 元。不過，既然你決定這次要出險，按照規定，你明年的車險保費一定會被調漲。既然保費都要漲了，不如我幫你『順便』把車門旁邊那些舊刮痕，全部算進這次的車禍理賠裡一起烤漆處理。估價單我開 25,000 元報給保險公司，反正保險公司的理賠員也不會分得那麼細，這樣你這幾年的保費才算回本啦！」</div>
+  </div>
+  <p style="font-weight:700;margin-bottom:9px;color:#374151;font-size:14px;">💭 聽完技師的建議後，您腦海中浮現了：</p>
+  <div class="condition-box"><div class="cond-label">【補充情境資訊 — ${c.type}】</div>${c.html}</div>
+</div>
+<div class="card">
+  <div class="sec-title">【題項評估】</div>
+  <p style="color:#718096;font-size:13px;margin-bottom:13px;">請評估您對以下敘述的同意程度（1 = 非常不同意 / 極不可能 ⋯ 5 = 非常同意 / 極有可能）</p>
+  ${likert('s2q',S2Q)}
+</div>
+<div class="card">
+  <div class="sec-title">【情境回顧測試】<span style="font-size:12px;font-weight:400;color:#718096;margin-left:8px;">操弄檢核題</span></div>
+  <p style="margin-bottom:13px;font-size:14px;font-weight:600;">請問在剛剛的情境故事，是如何描述這家產險公司（理賠金來源）的？</p>
+  <div class="radio-group">
+    ${ro('s2mc','A','（A）描述這是一家前三大金控集團旗下的子公司，集團資產規模龐大。')}
+    ${ro('s2mc','B','（B）描述理賠金是來自全體車主共同繳納的互助資金池，浮報會導致眾人保費上漲。')}
+    ${ro('s2mc','C','（C）我沒有注意到 / 忘記了。')}
+  </div>
+  <div class="page-nav">
+    <span class="page-nav-hint">🚗 情境二：汽車車體險</span>
+    <button class="btn btn-primary" onclick="submitS2()">下一步，繼續 →</button>
+  </div>
+</div>`;}
+function submitS2(){for(let i=1;i<=7;i++){if(!S.s2q['q'+i]){alert('請完整回答所有 7 題評估題後再繼續。');return;}}if(!S.s2mc){alert('請回答情境回顧測試題。');return;}S.step++;nextScenario();}
+
+/* ════════════════════════════════════
+   DEMOGRAPHICS
+   ════════════════════════════════════ */
+function pgDemo(){return`
+<div class="header"><h1>👤 基本資料</h1><p>最後幾題基本背景資料，即將完成！</p></div>
+<div class="prog-wrap"><div class="prog-bar" style="width:88%"></div></div>
+<div class="card">
+  <div class="sec-title">【基本資料】</div>
+  ${qB(1,'請問您的性別為？',rg('gender',[['male','男'],['female','女'],['other','其他 / 不願透露']]))}
+  ${qB(2,'請問您的最高學歷為？',rg('edu',[['1','高中職以下'],['2','專科'],['3','大學'],['4','碩士以上']]))}
+  ${S.smartphone==='yes'?qB(3,'請問您目前主要使用的智慧型手機，購買時的空機價格大約為？',rg('phone_price',[['1','1.5萬以下'],['2','1.5萬～2.5萬'],['3','2.5萬～3.5萬'],['4','3.5萬以上']])):''}
+  ${S.car==='yes'?qB(S.smartphone==='yes'?4:3,'請問您目前主要駕駛的汽車，車齡大約為？',rg('car_age',[['1','3年內'],['2','4～7年'],['3','8～10年'],['4','10年以上']])):''}
+  <div class="page-nav">
+    <span class="page-nav-hint">👤 基本資料（最後一步）</span>
+    <button class="btn btn-primary" id="submitBtn" onclick="submitDemo()">提交問卷 ✓</button>
+  </div>
+</div>`;}
+
+async function submitDemo(){
+  if(!S.gender||!S.edu){alert('請填寫性別與學歷。');return;}
+  if(S.smartphone==='yes'&&!S.phone_price){alert('請填寫手機購買價格。');return;}
+  if(S.car==='yes'&&!S.car_age){alert('請填寫汽車車齡。');return;}
+  const btn=document.getElementById('submitBtn');
+  if(btn){btn.disabled=true;btn.textContent='⏳ 儲存中...';}
+  const yn=v=>v==='yes'?1:v==='no'?0:'';
+  const cI=(q,ks)=>{const vs=ks.map(k=>+(S[q][k]||0)).filter(v=>v>0);return vs.length===ks.length?(vs.reduce((s,x)=>s+x,0)/vs.length).toFixed(3):'';}
+  const d={
+    ResponseID:S.rid,Timestamp:new Date().toISOString(),StartTime:S.ts,
+    Screen_Age18:yn(S.age20),Screen_Smartphone:yn(S.smartphone),Screen_Car:yn(S.car),Screen_Purchased:yn(S.purchased),
+    ScenarioOrder:S.order?S.order.join('-'):'',
+    S1_Condition:S.s1cond||'',S1_CondCode:S.s1cond?{A:1,B:2,C:3}[S.s1cond]:'',
+    S1_Q1:S.s1q.q1||'',S1_Q2:S.s1q.q2||'',S1_Q3:S.s1q.q3||'',
+    S1_Q4:S.s1q.q4||'',S1_Q5:S.s1q.q5||'',
+    S1_Q6_R:S.s1q.q6||'',S1_Q7_R:S.s1q.q7||'',
+    S1_ManipCheck:{A:1,B:2,C:3,D:4}[S.s1mc]||'',
+    S1_ManipCorrect:S.s1mc&&S.s1cond?(S.s1mc===S.s1cond?1:0):'',
+    S1_Intent_Composite:cI('s1q',['q1','q2','q3']),
+    S2_Condition:S.s2cond||'',S2_CondCode:S.s2cond?{A:0,B:1}[S.s2cond]:'',
+    S2_Q1:S.s2q.q1||'',S2_Q2:S.s2q.q2||'',S2_Q3:S.s2q.q3||'',
+    S2_Q4_R:S.s2q.q4||'',S2_Q5:S.s2q.q5||'',
+    S2_Q6_Guilt:S.s2q.q6||'',
+    S2_Q7_Guilt:S.s2q.q7||'',
+    S2_ManipCheck:{A:1,B:2,C:3}[S.s2mc]||'',
+    S2_ManipCorrect:S.s2mc&&S.s2cond?(S.s2mc===S.s2cond?1:0):'',
+    S2_Intent_Composite:cI('s2q',['q1','q2','q3']),
+    S2_Guilt_Composite:(()=>{const v=[+(S.s2q.q6||0),+(S.s2q.q7||0)].filter(v=>v>0);return v.length===2?((v[0]+v[1])/2).toFixed(3):''})(),
+    Demo_Gender:{male:1,female:2,other:3}[S.gender]||'',
+    Demo_Education:S.edu||'',Demo_PhonePrice:S.phone_price||'',Demo_CarAge:S.car_age||''
+  };
+  await storageSave(d);
+  S.page='done';render();
+}
+
+/* ════════════════════════════════════
+   DONE
+   ════════════════════════════════════ */
+function pgDone(){return`<div class="card thank-card"><div class="icon">🎉</div><h2>感謝您的參與！</h2><p>本問卷到此結束，非常感謝您寶貴的時間與協助！</p><p style="margin-top:8px;">祝您有個美好的一天 ～</p><div style="margin-top:28px;"><button class="btn btn-secondary" onclick="reset();render()">返回首頁（讓他人填寫）</button></div></div>`;}
+
+/* ════════════════════════════════════
+   ADMIN PANEL
+   ════════════════════════════════════ */
+let _adminRS=[];// 全域暫存，避免 tab onclick 塞入大量 JSON
+
+async function renderAdmin(){
+  S.page='admin';
+  document.getElementById('app').innerHTML=`
+<div class="header"><h1>📊 研究人員管理後台</h1><p>資料管理 ｜ ANOVA（情境一）｜ Hayes PROCESS Model 4（情境二）｜ CSV 匯出</p></div>
+<div class="card"><div class="loading">⏳ 連線中，載入資料...</div></div>`;
+  const rs=await storageLoadAll();
+  _adminRS=rs;// 存入全域變數
+  const s1r=rs.filter(r=>r.S1_Condition);
+  const s2r=rs.filter(r=>r.S2_Condition);
+  const gasOk=!!CONFIG.GAS_URL;
+  document.getElementById('app').innerHTML=`
+<div class="header"><h1>📊 研究人員管理後台</h1><p>資料管理 ｜ ANOVA（情境一）｜ Hayes PROCESS Model 4（情境二）｜ CSV 匯出（SPSS 格式）</p></div>
+
+${gasOk
+  ?`<div class="gas-connected">✅ <strong>已連接 Google Sheets</strong>　後台資料來源：Google Apps Script 雲端資料庫<br>
+     <small>GAS URL：${CONFIG.GAS_URL.slice(0,70)}${CONFIG.GAS_URL.length>70?'...':''}</small></div>`
+  :`<div class="gas-setup">
+  <h3>⚙️ 尚未設定 GAS 連線 — 目前為本機測試模式（資料僅存於本裝置）</h3>
+  <p style="font-size:13px;color:#78350f;line-height:1.8;margin-bottom:8px;">請依以下步驟完成設定，讓問卷資料自動同步至 Google Sheets 並可跨裝置查閱：</p>
+  <ol>
+    <li>前往 <a href="https://script.google.com" target="_blank" style="color:#1a4f8b;">script.google.com</a> → 建立新專案 → 將 <code>gas_code.gs</code> 程式碼貼入編輯器</li>
+    <li>點「部署」→「新增部署」→ 類型：<code>網路應用程式</code> → 執行身分：<code>我</code> → 存取：<code>所有人</code> → 部署</li>
+    <li>複製「部署網址」（以 /exec 結尾）</li>
+    <li>用文字編輯器開啟 <code>survey.html</code>，找到頂端 <code>GAS_URL: ''</code>，將網址貼入引號內</li>
+    <li>將修改後的 HTML 上傳至 GitHub Pages，分享網址給受訪者填寫</li>
+  </ol>
+</div>`}
+
+<div class="card">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="num">${rs.length}</div><div class="lbl">總填答人數</div></div>
+    <div class="stat-card"><div class="num">${s1r.length}</div><div class="lbl">情境一有效</div></div>
+    <div class="stat-card"><div class="num">${s2r.length}</div><div class="lbl">情境二有效</div></div>
+    <div class="stat-card"><div class="num">${rs.filter(r=>r.S1_ManipCorrect==1).length}</div><div class="lbl">S1 操弄通過</div></div>
+    <div class="stat-card"><div class="num">${rs.filter(r=>r.S2_ManipCorrect==1).length}</div><div class="lbl">S2 操弄通過</div></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button class="btn btn-success" onclick="exportCSV()">⬇ 匯出 CSV（SPSS）</button>
+    <button class="btn btn-danger" onclick="storageClear()">🗑 清除本機快取</button>
+    <button class="btn btn-secondary" onclick="renderAdmin()">🔄 重新整理</button>
+    <button class="btn btn-secondary" onclick="reset();render()">← 返回問卷首頁</button>
+  </div>
+</div>
+<div class="card">
+  <div class="tab-nav">
+    <button class="tab-btn ${aTab==='overview'?'active':''}" onclick="switchTab('overview')">📈 資料總覽</button>
+    <button class="tab-btn ${aTab==='anova1'?'active':''}" onclick="switchTab('anova1')">🧪 情境一 ANOVA (A/B/C)</button>
+    <button class="tab-btn ${aTab==='process2'?'active':''}" onclick="switchTab('process2')">🔬 情境二 PROCESS Model 4</button>
+    <button class="tab-btn ${aTab==='raw'?'active':''}" onclick="switchTab('raw')">🗃 原始資料</button>
+  </div>
+  <div id="tb">${tabC(_adminRS)}</div>
+</div>`;}
+
+function switchTab(t){
+  aTab=t;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tb').innerHTML=tabC(_adminRS);
+}
+
+function tabC(rs){if(aTab==='overview')return tabOverview(rs);if(aTab==='anova1')return tabAnova1(rs);if(aTab==='process2')return tabProcess2(rs);if(aTab==='raw')return tabRaw(rs);return '';}
+
+/* ── OVERVIEW ── */
+function tabOverview(rs){
+  if(!rs.length)return'<div class="alert alert-warn">尚無資料。</div>';
+  const s1r=rs.filter(r=>r.S1_Condition),s2r=rs.filter(r=>r.S2_Condition);
+  const ct=(arr,k)=>arr.reduce((m,r)=>{m[r[k]]=(m[r[k]]||0)+1;return m;},{});
+  const pct=(n,t)=>t>0?(n/t*100).toFixed(1)+'%':'—';
+  const g=ct(rs,'Demo_Gender'),e=ct(rs,'Demo_Education'),s1c=ct(s1r,'S1_Condition'),s2c=ct(s2r,'S2_Condition');
+  const gL={1:'男',2:'女',3:'其他'},eL={1:'高中職以下',2:'專科',3:'大學',4:'碩士以上'};
+  const row=(lbl,n,t)=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #e8edf2;font-size:12.5px;"><span>${lbl}</span><span><strong>${n}</strong>（${pct(n,t)}）</span></div>`;
+  return`<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;">
+  <div><p style="font-weight:700;font-size:13px;margin-bottom:8px;">性別（N=${rs.length}）</p>${[1,2,3].map(k=>row(gL[k],g[k]||0,rs.length)).join('')}</div>
+  <div><p style="font-weight:700;font-size:13px;margin-bottom:8px;">教育程度</p>${[1,2,3,4].map(k=>row(eL[k],e[k]||0,rs.length)).join('')}</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+  <div><p style="font-weight:700;font-size:13px;margin-bottom:8px;">情境一組別（N=${s1r.length}）</p>${['A','B','C'].map(c=>row('組別 '+c,s1c[c]||0,s1r.length)).join('')}</div>
+  <div><p style="font-weight:700;font-size:13px;margin-bottom:8px;">情境二組別（N=${s2r.length}）</p>${['A','B'].map(c=>row('組別 '+c,s2c[c]||0,s2r.length)).join('')}</div>
+</div>`;}
+
+/* ── ANOVA TAB ── */
+function tabAnova1(rs){
+  const s1all=rs.filter(r=>r.S1_Condition);
+  const s1r=s1all.filter(r=>String(r.S1_ManipCorrect)==='1');
+  const nExcluded=s1all.length-s1r.length;
+  if(s1r.length<6)return`<div class="alert alert-warn">情境一操弄通過樣本不足（通過 ${s1r.length} 筆，排除 ${nExcluded} 筆）。</div>`;
+  const gA=s1r.filter(r=>r.S1_Condition==='A'),gB=s1r.filter(r=>r.S1_Condition==='B'),gC=s1r.filter(r=>r.S1_Condition==='C');
+  const vars=[
+    {k:'S1_Q1',l:'Q1 採納同事建議弄碎手機申請理賠'},
+    {k:'S1_Q2',l:'Q2 技巧性讓手機符合理賠標準'},
+    {k:'S1_Q3',l:'Q3 故意擴大手機損壞程度'},
+    {k:'S1_Q4',l:'Q4 只是拿回應得權益（道德脫離）'},
+    {k:'S1_Q5',l:'Q5 保險規定不通人情（外部歸因）'},
+    {k:'S1_Q6_R',l:'Q6 認為是嚴重詐欺行為（反向題）'},
+    {k:'S1_Q7_R',l:'Q7 強烈不安與罪惡感（反向題）'},
+    {k:'S1_Intent_Composite',l:'🔑 詐欺意圖複合指標（Q1+Q2+Q3 均值）'},
+  ];
+  let dRows='';
+  [[gA,'A 一般聲明'],[gB,'B 誠實聲明'],[gC,'C 社會規範']].forEach(([g,l])=>{
+    if(!g.length){dRows+=`<tr><td>${l}<td colspan="8" style="color:#aaa;text-align:center">無資料</tr>`;return;}
+    const ms=['S1_Q1','S1_Q2','S1_Q3','S1_Q4','S1_Q5','S1_Q6_R','S1_Q7_R'].map(k=>mu(g.map(r=>num(r[k])).filter(v=>!isNaN(v))));
+    const ci=mu(g.map(r=>num(r.S1_Intent_Composite)).filter(v=>!isNaN(v)));
+    dRows+=`<tr><td><strong>${l}</strong> (n=${g.length})</td>${ms.map(m=>`<td>${isNaN(m)?'—':m.toFixed(2)}</td>`).join('')}<td><strong>${isNaN(ci)?'—':ci.toFixed(2)}</strong></td></tr>`;
+  });
+  let aRows='';
+  vars.forEach(({k,l})=>{
+    const gs=[gA,gB,gC].map(g=>g.map(r=>num(r[k])).filter(v=>!isNaN(v))).filter(g=>g.length>=2);
+    if(gs.length<2){aRows+=`<tr><td>${l}<td colspan="9" style="color:#aaa;text-align:center">資料不足</tr>`;return;}
+    const r=anova(gs);const sl=sigStar(r.p),sc=r.p<.05?'sig':'',hl=r.p<.05?'hl':'';
+    aRows+=`<tr class="${hl}"><td style="font-size:11.5px;">${l}</td><td>${r.SSB.toFixed(2)}</td><td>${r.SSW.toFixed(2)}</td><td>${r.dfB}</td><td>${r.dfW}</td><td>${r.MSB.toFixed(3)}</td><td>${r.MSW.toFixed(3)}</td><td class="${sc}">${r.F.toFixed(3)}</td><td class="${sc}">${fp(r.p)}</td><td class="${sc}">${sl}</td></tr>`;
+  });
+  return`
+<div class="alert alert-info">單因子變異數分析（One-Way ANOVA）｜核心假設：不同理賠申請書聲明文字（A 一般聲明 / B 誠實聲明 / C 社會規範）能否有效降低手機險浮報意圖｜僅納入操弄檢核通過之樣本（S1_ManipCorrect=1）｜排除 ${nExcluded} 筆，有效樣本 N=${s1r.length}</div>
+<div class="sec-title" style="font-size:14px;">各組描述統計（平均值）</div>
+<div style="overflow-x:auto;"><table class="dtbl"><thead><tr><th>條件</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6反</th><th>Q7反</th><th>🔑意圖均值</th></tr></thead><tbody>${dRows}</tbody></table></div>
+<div class="sec-title" style="font-size:14px;margin-top:6px;">ANOVA 分析結果</div>
+<div style="overflow-x:auto;"><table class="atbl"><thead><tr><th>依變數</th><th>SS組間</th><th>SS組內</th><th>df組間</th><th>df組內</th><th>MS組間</th><th>MS組內</th><th>F 值</th><th>p 值</th><th>顯著</th></tr></thead><tbody>${aRows}</tbody></table></div>
+<div class="legend">顯著性：*** p&lt;.001 ** p&lt;.01 * p&lt;.05 † p&lt;.10 ns 不顯著 ｜ 🟡 黃色列 p&lt;.05<br>
+注意：Q6、Q7 為反向題，分數愈高表示道德感知愈弱。</div>
+${buildS1Process(s1r)}`;}
+
+/* ── S1 PROCESS 輔助函數 ── */
+function buildS1Process(s1r){
+  if(s1r.length<10)return'';
+  const gA=s1r.filter(r=>r.S1_Condition==='A');
+  const gB=s1r.filter(r=>r.S1_Condition==='B');
+  const gC=s1r.filter(r=>r.S1_Condition==='C');
+  if(gA.length<5||gB.length<5||gC.length<5)return'<div class="alert alert-warn" style="margin-top:12px;">PROCESS 分析：各組樣本數不足（需每組 ≥ 5）。</div>';
+
+  function s1Med(grp0,grp1,label,mvKey,mvLabel){
+    const rows=[...grp0.map(r=>({...r,_x:0})),...grp1.map(r=>({...r,_x:1}))];
+    const x=rows.map(r=>r._x);
+    const y=rows.map(r=>(num(r.S1_Q1)+num(r.S1_Q2)+num(r.S1_Q3))/3);
+    const m=rows.map(r=>mvKey==='mv1'?(num(r.S1_Q4)+num(r.S1_Q5))/2:(num(r.S1_Q6_R)+num(r.S1_Q7_R))/2);
+    const valid=x.map((_,i)=>!isNaN(y[i])&&!isNaN(m[i]));
+    const xv=x.filter((_,i)=>valid[i]),yv=y.filter((_,i)=>valid[i]),mv=m.filter((_,i)=>valid[i]);
+    if(xv.length<10)return`<p style="color:#aaa;font-size:12px;">資料不足，無法計算（${label} × ${mvLabel}）</p>`;
+    const res=runMediation(xv,mv,yv,3000);
+    if(!res)return`<p style="color:#aaa;font-size:12px;">計算失敗（${label} × ${mvLabel}）</p>`;
+    const medOK=!(res.lo<=0&&res.hi>=0);
+    const sl=p=>p<.001?'***':p<.01?'**':p<.05?'*':p<.1?'†':'ns';
+    const tr=(lbl,b,se,tv,pv)=>`<tr class="${pv<.05?'hl':''}"><td>${lbl}</td><td class="${pv<.05?'sig':''}">${b>=0?'+':''}${b.toFixed(4)}</td><td>${se.toFixed(4)}</td><td>${tv.toFixed(3)}</td><td class="${pv<.05?'sig':''}">${fp(pv)}</td><td class="${pv<.05?'sig':''}">${sl(pv)}</td></tr>`;
+    return`
+<div class="proc-section" style="margin-top:10px;">
+  <h4>── ${label} ｜ 中介變數：${mvLabel} ──</h4>
+  <p style="font-size:12px;color:#4a5568;margin-bottom:8px;">X=條件（0=${label.split('vs')[0].trim()} / 1=${label.split('vs')[1].trim()}）｜M=${mvLabel}｜Y=浮報意圖（Q1+Q2+Q3 均值）｜N=${xv.length}</p>
+  <table class="atbl"><thead><tr><th>路徑</th><th>b</th><th>SE</th><th>t</th><th>p</th><th>顯著</th></tr></thead>
+  <tbody>
+    ${tr('X→M 路徑 a',res.a,res.a_se,res.a_t,res.a_p)}
+    ${tr('M→Y 路徑 b（控制X）',res.b,res.b_se,res.b_t,res.b_p)}
+    ${tr('X→Y 直接效果 c'',res.cp,res.cp_se,res.cp_t,res.cp_p)}
+    ${tr('X→Y 總效果 c',res.c,res.c_se,res.c_t,res.c_p)}
+  </tbody></table>
+  <div class="indir-box ${medOK?'indir-ok':'indir-ns'}" style="margin-top:8px;padding:10px 14px;">
+    <strong>${medOK?'✅':'⚠️'} 間接效果 a×b = ${res.indirect.toFixed(4)}　Bootstrap 95% CI（B=3000）：[${res.lo.toFixed(4)}, ${res.hi.toFixed(4)}]</strong><br>
+    <span style="font-size:12.5px;">${medOK?'CI 不含 0 → 中介效果顯著（p &lt; .05）':'CI 包含 0 → 中介效果不顯著'}</span>
+  </div>
+</div>`;
+  }
+
+  return`
+<div style="margin-top:24px;border-top:3px solid #1a4f8b;padding-top:16px;">
+<div class="sec-title" style="font-size:14px;">補充分析：PROCESS Model 4 中介效果（選項 C 探索性分析）</div>
+<div class="alert alert-info" style="margin-bottom:12px;">
+  以 Hayes PROCESS Model 4 探索中介機制（Bootstrap B=3000）｜X 為二元對比（控制組 A vs 各實驗組）<br>
+  MV1 自我維護與合理化 = Q4+Q5 均值｜MV2 道德嚴重性感知 = Q6+Q7 均值｜Y = 浮報意圖（Q1+Q2+Q3 均值）<br>
+  <small>⚠️ 注意：Q4、Q5 原設計為依變數，此處作為中介變數測量屬探索性分析，解釋時須保守。</small>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+  ${s1Med(gA,gB,'A（控制組）vs B（誠實聲明）','mv1','MV1 自我合理化（Q4+Q5）')}
+  ${s1Med(gA,gC,'A（控制組）vs C（社會規範）','mv1','MV1 自我合理化（Q4+Q5）')}
+  ${s1Med(gA,gB,'A（控制組）vs B（誠實聲明）','mv2','MV2 道德嚴重性感知（Q6+Q7）')}
+  ${s1Med(gA,gC,'A（控制組）vs C（社會規範）','mv2','MV2 道德嚴重性感知（Q6+Q7）')}
+</div>
+<div class="legend">† p&lt;.10 * p&lt;.05 ** p&lt;.01 *** p&lt;.001 ｜ 此為探索性中介分析，對應 Hayes PROCESS Model 4（2022）</div>
+</div>`;
+}
+
+/* ── PROCESS Model 4 TAB ── */
+function tabProcess2(rs){
+  const s2all=rs.filter(r=>r.S2_Condition&&r.S2_Q6_Guilt&&r.S2_Q7_Guilt&&r.S2_Q1&&r.S2_Q2&&r.S2_Q3);
+  const s2v=s2all.filter(r=>String(r.S2_ManipCorrect)==='1');
+  const nExcluded2=s2all.length-s2v.length;
+  if(s2v.length<15)return`<div class="alert alert-warn">情境二操弄通過樣本不足（通過 ${s2v.length} 筆，排除 ${nExcluded2} 筆）。Bootstrap 拔靴法需至少 15 筆以上資料。</div>`;
+  const x=s2v.map(r=>+r.S2_CondCode);
+  const m=s2v.map(r=>(+r.S2_Q6_Guilt+ +r.S2_Q7_Guilt)/2);
+  const y=s2v.map(r=>(+r.S2_Q1+ +r.S2_Q2+ +r.S2_Q3)/3);
+  const res=runMediation(x,m,y,5000);
+  if(!res)return'<div class="alert alert-warn">分析失敗，請確認資料完整性。</div>';
+  const nA=s2v.filter(r=>r.S2_Condition==='A').length;
+  const nB=s2v.filter(r=>r.S2_Condition==='B').length;
+  const mAg=mu(s2v.filter(r=>r.S2_Condition==='A').map(r=>(+r.S2_Q6_Guilt+ +r.S2_Q7_Guilt)/2));
+  const mBg=mu(s2v.filter(r=>r.S2_Condition==='B').map(r=>(+r.S2_Q6_Guilt+ +r.S2_Q7_Guilt)/2));
+  const mAi=mu(s2v.filter(r=>r.S2_Condition==='A').map(r=>(+r.S2_Q1+ +r.S2_Q2+ +r.S2_Q3)/3));
+  const mBi=mu(s2v.filter(r=>r.S2_Condition==='B').map(r=>(+r.S2_Q1+ +r.S2_Q2+ +r.S2_Q3)/3));
+  const sl=p=>p<.001?'***':p<.01?'**':p<.05?'*':p<.1?'†':'';
+  const medOK=!(res.lo<=0&&res.hi>=0);
+  const tr=(label,b,se,tv,pv,note='')=>`<tr class="${pv<.05?'hl':''}"><td>${label}${note?`<br><small style="color:#718096;">${note}</small>`:''}</td><td class="${pv<.05?'sig':''}">${b>=0?'+':''}${b.toFixed(4)}</td><td>${se.toFixed(4)}</td><td>${tv.toFixed(3)}</td><td class="${pv<.05?'sig':''}">${fp(pv)}</td><td class="${pv<.05?'sig':''}">${sl(pv)}</td></tr>`;
+  return`
+<div class="alert alert-info"><strong>Hayes PROCESS Macro Model 4（簡單中介效果分析）</strong><br>
+  研究假設：互助資金池框架（B 組）→ 提升「預期罪惡感」（M）→ 降低車體險浮報意圖（Y）<br>
+  X = 條件組別（A=0 大金控控制組 / B=1 互助框架實驗組）｜M = 預期罪惡感（Q6+Q7 均值）｜Y = 浮報意圖（Q1+Q2+Q3 均值）<br>  僅納入操弄檢核通過之樣本（S2_ManipCorrect=1）｜排除 ${nExcluded2} 筆，有效樣本 N=${s2v.length}</div>
+<div class="sec-title" style="font-size:14px;">各組描述統計</div>
+<table class="dtbl" style="max-width:500px;">
+  <thead><tr><th>組別</th><th>n</th><th>M 預期罪惡感</th><th>Y 浮報意圖</th></tr></thead>
+  <tbody>
+    <tr><td><strong>A（大金控形象，X=0）</strong></td><td>${nA}</td><td>${mAg.toFixed(2)}</td><td>${mAi.toFixed(2)}</td></tr>
+    <tr><td><strong>B（互助資金池，X=1）</strong></td><td>${nB}</td><td>${mBg.toFixed(2)}</td><td>${mBi.toFixed(2)}</td></tr>
+  </tbody>
+</table>
+<div class="proc-section">
+  <h4>─── Model 1：M（預期罪惡感）← X（條件組別） ───</h4>
+  <table class="atbl"><thead><tr><th>預測變數</th><th>b</th><th>SE</th><th>t</th><th>p</th><th>顯著</th></tr></thead>
+  <tbody>${tr('X → M（路徑 a）',res.a,res.a_se,res.a_t,res.a_p,'B 組是否使罪惡感升高？')}</tbody></table>
+  <p style="font-size:12px;color:#4a5568;">路徑 a = ${res.a.toFixed(4)}：B 組（互助框架）使預期罪惡感${res.a>0?'↑ 升高':'↓ 降低'} ${Math.abs(res.a).toFixed(4)} 單位</p>
+</div>
+<div class="proc-section">
+  <h4>─── Model 2：Y（浮報意圖）← X + M（同時放入） ───</h4>
+  <table class="atbl"><thead><tr><th>預測變數</th><th>b</th><th>SE</th><th>t</th><th>p</th><th>顯著</th></tr></thead>
+  <tbody>
+    ${tr('M → Y（路徑 b，控制 X 下）',res.b,res.b_se,res.b_t,res.b_p,'罪惡感能否降低浮報意圖？')}
+    ${tr('X → Y（路徑 c\'，直接效果）',res.cp,res.cp_se,res.cp_t,res.cp_p,'控制 M 後 X 的直接影響')}
+  </tbody></table>
+  <p style="font-size:12px;color:#4a5568;">路徑 b = ${res.b.toFixed(4)}：罪惡感每增加 1 單位，浮報意圖${res.b<0?'↓ 降低':'↑ 升高'} ${Math.abs(res.b).toFixed(4)} 單位（控制 X 後）</p>
+</div>
+<div class="proc-section">
+  <h4>─── 效果分解（Effect Decomposition） ───</h4>
+  <table class="atbl"><thead><tr><th>效果</th><th>b</th><th>SE</th><th>t</th><th>p</th><th>說明</th></tr></thead>
+  <tbody>
+    ${tr('總效果 c（X→Y）',res.c,res.c_se,res.c_t,res.c_p,'含中介路徑的 X 對 Y 總影響')}
+    ${tr('直接效果 c\'（X→Y|M）',res.cp,res.cp_se,res.cp_t,res.cp_p,'排除中介後 X 對 Y 的剩餘影響')}
+    <tr style="background:#eff6ff;"><td><strong>間接效果 a×b（X→M→Y）</strong></td><td><strong>${(res.indirect>=0?'+':'')+res.indirect.toFixed(4)}</strong></td><td colspan="4" style="font-size:12px;color:#4a5568;">以 Bootstrap 95% CI 檢定（見下方），a×b = ${res.a.toFixed(4)} × ${res.b.toFixed(4)}</td></tr>
+  </tbody></table>
+</div>
+<div class="indir-box ${medOK?'indir-ok':'indir-ns'}">
+  <h4>${medOK?'✅':'⚠️'} Bootstrap 拔靴法 95% 信賴區間（間接效果檢定）</h4>
+  <p>間接效果估計值（a×b）：<strong>${(res.indirect>=0?'+':'')+res.indirect.toFixed(4)}</strong></p>
+  <p style="margin-top:5px;">Bootstrap 95% CI（B = ${res.B} 次，Percentile Method）：<strong>[${res.lo.toFixed(4)}, ${res.hi.toFixed(4)}]</strong></p>
+  <p style="margin-top:10px;font-weight:700;font-size:13.5px;">${medOK
+    ?`✅ CI 不包含 0 → 中介效果達統計顯著（等同 p &lt; .05）。${res.cp_p>=.05?'直接效果 c\' 不顯著，支持<strong>完全中介（Full Mediation）</strong>。':'直接效果 c\' 亦顯著，支持<strong>部分中介（Partial Mediation）</strong>。'}互助資金池框架確實透過提升預期罪惡感，進而降低浮報意圖。`
+    :`⚠️ CI 包含 0（[${res.lo.toFixed(4)}, ${res.hi.toFixed(4)}]）→ 中介效果在 α=.05 下未達顯著。建議增加樣本量或重新檢視中介變數之操弄強度。`}
+  </p>
+</div>
+<div class="legend">† p&lt;.10 * p&lt;.05 ** p&lt;.01 *** p&lt;.001 ｜ 此輸出格式對應 SPSS PROCESS Macro Model 4（Hayes, 2013, 2022）<br>
+SPSS 操作提示：匯出 CSV 後，在 SPSS 執行 PROCESS：X=S2_CondCode, M=S2_Guilt_Composite, Y=S2_Intent_Composite, Model=4, Bootstrap=5000</div>`;}
+
+/* ── RAW DATA ── */
+function tabRaw(rs){if(!rs.length)return'<div class="alert alert-warn">尚無資料。</div>';const cols=Object.keys(rs[0]);const disp=rs.slice(-30);return`${rs.length>30?`<div class="alert alert-info">顯示最後 30 筆（共 ${rs.length} 筆），完整資料請匯出 CSV。</div>`:''}
+<div class="raw-wrap"><table class="rtbl"><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${disp.map(r=>`<tr>${cols.map(c=>`<td>${r[c]??''}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;}
+
+/* ════════════════════════════════════
+   CSV EXPORT
+   ════════════════════════════════════ */
+function exportCSV(){storageLoadAll().then(rs=>{if(!rs.length){alert('目前沒有資料可以匯出。');return;}const cols=Object.keys(rs[0]);let csv='\uFEFF'+cols.join(',')+'\n';rs.forEach(r=>{csv+=cols.map(c=>`"${String(r[c]??'').replace(/"/g,'""')}"`).join(',')+'\n';});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download=`survey_data_${new Date().toISOString().slice(0,10)}.csv`;a.click();});}
+
+/* ════════════════════════════════════
+   UI HELPERS
+   ════════════════════════════════════ */
+function qB(n,text,input){return`<div class="q-block"><div class="q-text"><span class="q-num">${n}</span><span>${text}</span></div>${input}</div>`;}
+function rg(key,opts){return`<div class="radio-group">${opts.map(([v,l])=>ro(key,v,l)).join('')}</div>`;}
+function ro(key,val,label){return`<label class="radio-opt${S[key]===val?' sel':''}" data-key="${key}" data-val="${val}"><input type="radio" name="${key}" value="${val}"${S[key]===val?' checked':''}><span>${label}</span></label>`;}
+function likert(prefix,qs){const ans=S[prefix];const rows=qs.map((q,i)=>{const qi='q'+(i+1);return`<tr><td>${i+1}. ${q}</td>${[1,2,3,4,5].map(v=>`<td><input type="radio" name="${prefix}_${qi}" value="${v}"${ans[qi]===v?' checked':''} data-prefix="${prefix}" data-qi="${qi}" data-v="${v}"></td>`).join('')}</tr>`;}).join('');return`<div class="likert-wrap"><table class="likert-tbl"><thead><tr><th>題目</th><th>1<br><small>非常不同意</small></th><th>2</th><th>3<br><small>普通</small></th><th>4</th><th>5<br><small>非常同意</small></th></tr></thead><tbody>${rows}</tbody></table></div><div class="likert-hint"><span>← 非常不同意 / 極不可能</span><span>非常同意 / 極有可能 →</span></div>`;}
+function bindClicks(){
+  document.querySelectorAll('.radio-opt').forEach(el=>{
+    el.addEventListener('click',function(e){if(e.target.tagName==='INPUT')return;const key=this.dataset.key,val=this.dataset.val;if(!key)return;S[key]=val;document.querySelectorAll(`.radio-opt[data-key="${key}"]`).forEach(l=>l.classList.remove('sel'));this.classList.add('sel');const inp=this.querySelector('input');if(inp)inp.checked=true;});
+    el.querySelector('input')?.addEventListener('change',function(){const key=this.closest('.radio-opt').dataset.key,val=this.value;if(!key)return;S[key]=val;document.querySelectorAll(`.radio-opt[data-key="${key}"]`).forEach(l=>l.classList.remove('sel'));this.closest('.radio-opt').classList.add('sel');});
+  });
+  document.querySelectorAll('input[data-prefix]').forEach(inp=>{inp.addEventListener('change',function(){S[this.dataset.prefix][this.dataset.qi]=+this.dataset.v;});});
+}
+/* INIT */
+render();
+</script>
+</body>
+</html>
